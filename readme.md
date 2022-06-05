@@ -55,7 +55,7 @@ Then you can run baselines: CBCF, STAN, GRU4Rec, SASRec, [STAMP](https://github.
 For Adressa and MIND, the procedure is the same.
 
 ## TCAR data pre-processing
-To leverage the negative feedback, you need to generate the inferenced the impression lists and sample negative points from them. The code is in ```data_process/generate_predict.py```
+To leverage the negative feedback, you need to generate the inferenced the impression lists and sample negative points from them. The code is in ```data_process/generate_neighbor.py```
 
 ## Training & testing
 Need to specify the model name, dataset, foldnum, etc. (See `python main.py -h`)

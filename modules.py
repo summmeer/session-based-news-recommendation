@@ -127,7 +127,7 @@ def count_alpha_m(inputs, content, interval, click_time, edim1, edim2, edim3, hi
     res_cont = linear_3d(content, edim2, hidden_size, stddev, "cont_linear_trans", active=None) # [batch_size, time_step, hidden_size]
     res_sum = res_input + res_cont
     if interval!=None:
-        res_inter = linear_3d(interval, 1, hidden_size, stddev, "inter_linear_trans", active=None) # [batch_size, time_step, hidden_size]
+        res_inter = linear_3d(interval, edim3, hidden_size, stddev, "inter_linear_trans", active=None) # [batch_size, time_step, hidden_size]
         res_sum += res_inter
     res_act1 = activer(res_sum, active) # [batch_size, time_step, hidden_size]
     res_act1 = linear_3d(res_act1, hidden_size, 1, stddev, "res_linear_trans", active=None) # [batch_size, time_step, 1]

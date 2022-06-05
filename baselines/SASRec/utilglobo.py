@@ -77,7 +77,6 @@ def evaluate(model, test_id, test_session, item_dict, itemnum, test_predict, arg
     NDCG_20 = 0.0
     HT_20 = 0.0
     ILD = 0.0
-    ESIR = 0.0
     unEXP = 0.0
     valid_session = 0.0
 
@@ -100,7 +99,6 @@ def evaluate(model, test_id, test_session, item_dict, itemnum, test_predict, arg
         predictList = list(predictions.argsort()[::-1][:20])
         # printData('newAD_Normal2_predict_'+str(foldnum)+'_'+str(epoch), test_session[test_i], test_predict[test_i], predictList)
         ILD += getILD(category_id, predictList, reverse_item)
-        ESIR += getESIR(item_freq_dict_norm, predictList)
         unEXP += getUnexp(seq, predictList, category_id, reverse_item)
         for p in predictList:
             diversity.add(p)
@@ -116,6 +114,5 @@ def evaluate(model, test_id, test_session, item_dict, itemnum, test_predict, arg
             print(test_predict[test_i])
     print('diversity of predict dict', len(diversity))
     print('ILD@20', ILD/valid_session)
-    print('ESIR@20', ESIR/valid_session)
     print('UNEXP@20', unEXP/valid_session)
     return NDCG_20 / valid_session, HT_20 / valid_session

@@ -40,7 +40,7 @@ print('total_cate', total_cate)
 with open('../../data/adressa/articles_embeddings_4.pkl', 'rb') as f:
     articles_embeddings = pickle.load(f)
 
-item_freq_dict_norm = pickle.load(open('/home/sansa/recsys/TCAR/data/adressa/TCAR-mid/Normal/item_freq_dict_norm_1.txt', 'rb'))
+# item_freq_dict_norm = pickle.load(open('/home/sansa/recsys/TCAR/data/adressa/TCAR-mid/Normal/item_freq_dict_norm_1.txt', 'rb'))
 
 def construct_articles_embedding(articles_embeddings, item_dict): 
     articles_vector = np.zeros((len(item_dict)+1, 250+total_cate))
@@ -87,19 +87,19 @@ def getUnexp(inSeq, recList):
         return 0
     return score/(n*cnt)
 
-def getESIR(item_freq_dict_norm, recList):
-    score = 0.0
-    n = len(recList)
-    norm = 0.0
-    if len(recList)==0:
-        return 0
-    for i in range(1, n+1):
-        if recList[i-1]+1 in item_freq_dict_norm:
-            score += item_freq_dict_norm[recList[i-1]+1]/np.log2(i+1)
-        else:
-            score += 20/np.log2(i+1)
-        norm += 1.0/np.log2(i+1)
-    return score/norm
+# def getESIR(item_freq_dict_norm, recList):
+#     score = 0.0
+#     n = len(recList)
+#     norm = 0.0
+#     if len(recList)==0:
+#         return 0
+#     for i in range(1, n+1):
+#         if recList[i-1]+1 in item_freq_dict_norm:
+#             score += item_freq_dict_norm[recList[i-1]+1]/np.log2(i+1)
+#         else:
+#             score += 20/np.log2(i+1)
+#         norm += 1.0/np.log2(i+1)
+#     return score/norm
 
 folds = [2]
 
@@ -146,7 +146,6 @@ for fold in folds:
     R_20 = 0
     NDCG_20 = 0
     ILD_20 = 0
-    ESIR = 0
     UNEXP = 0
 
     resultItemDict = set()
@@ -160,7 +159,6 @@ for fold in folds:
             # score += simi2[index] # only CF session
         sortlist = list(score.argsort())[::-1]
         ILD_20 += getILD(category_id, sortlist[:20], reverse_item)
-        ESIR += getESIR(item_freq_dict_norm, sortlist[:20])
         UNEXP += getUnexp(session, sortlist[:20])
         for p in sortlist[:20]:
             resultItemDict.add(p)
@@ -176,12 +174,10 @@ for fold in folds:
     R_20 = R_20 / testing_size
     NDCG_20 = NDCG_20 / testing_size
     ILD_20 = ILD_20 / testing_size
-    ESIR = ESIR/testing_size
     UNEXP = UNEXP/testing_size
 
     print("R@20: %f" % R_20)
     print("NDCG@20: %f" % NDCG_20)
     print("ILD@20: %f" % ILD_20)
-    print("ESIR: %f" % ESIR)
     print("UNEXP: %f" % UNEXP)
     print ('len of result dict: ', len(resultItemDict))
