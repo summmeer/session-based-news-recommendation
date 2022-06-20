@@ -176,9 +176,9 @@ class Seq2SeqAttNN():
         n = len(recList)
         for i in range(0, n):
             for j in range(0, n):
-                if self.reverse_item[recList[i]] in self.category_id and self.reverse_item[recList[j]] in self.category_id:
-                    if j!=i and self.category_id[self.reverse_item[recList[i]]]!=self.category_id[self.reverse_item[recList[j]]]:
-                        score += 1
+                # if self.reverse_item[recList[i]] in self.category_id and self.reverse_item[recList[j]] in self.category_id:  ## this line is needed for Addressa and MIND dataset, but not needed for Globo, or it costs a lot of time, and seems like dead loop
+                if j!=i and self.category_id[self.reverse_item[recList[i]]]!=self.category_id[self.reverse_item[recList[j]]]:
+                    score += 1
         return score/(n*(n-1))
 
     def getUnexp(self, inSeq, recList):
@@ -188,9 +188,9 @@ class Seq2SeqAttNN():
             return 0
         for i in range(0, n):
             for ini in inSeq:
-                if self.reverse_item[recList[i]] in self.category_id and self.reverse_item[ini-1] in self.category_id:
-                    if self.category_id[self.reverse_item[recList[i]]]!=self.category_id[self.reverse_item[ini-1]]:
-                        score +=1
+                # if self.reverse_item[recList[i]] in self.category_id and self.reverse_item[ini-1] in self.category_id: ### this line is needed for Addressa and MIND dataset, but not needed for Globo, or it costs a lot of time, and seems like dead loop
+                if self.category_id[self.reverse_item[recList[i]]]!=self.category_id[self.reverse_item[ini-1]]:
+                    score +=1
         return score/(n*len(inSeq))
 
     def train(self, sess, item_dict, train_data, neighbor_dict, args, test_data=None, saver=None, threshold_acc=0.99):
