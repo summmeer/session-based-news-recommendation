@@ -7,7 +7,7 @@ Our model is named TCAR (Temporal and Content Aware Recommendation System)
 ## Dataset prepare
 We use 3 dataset:
 - Globo.com <https://www.kaggle.com/gspmoreira/news-portal-user-interactions-by-globocom> download the data to the folder `../data/globo/`
-- Adressa <https://reclab.idi.ntnu.no/dataset/> (Need contact them for the full dataset) download the data to the folder `../data/adressa/`. We use a crawler to get the titles of news articles in this dataset, the code is in ```data_process/get_content_vec.py``` 
+- Adressa <https://reclab.idi.ntnu.no/dataset/> (Need contact them for the full dataset) download the data to the folder `../data/adressa/`. We use a crawler to get the titles of news articles in this dataset, the code is in ```data_process/get_content_vec.py```. The preprocess is following https://github.com/bio-info-guy/AdressaDataLSTMRecommender
 - MIND <https://msnews.github.io/> download the data to the folder `../data/mind/`
 
 ## Session data preprocessing
